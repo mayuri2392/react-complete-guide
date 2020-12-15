@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
 import './App.css';
-import Radium, { StyleRoot } from 'radium';
+import styled from 'styled-components';
 import Person from './Person/Person';
+
+const StyledButton = styled.button`
+background-color : ${props => props.alt ? 'red' : 'green'};
+color : white;
+font : inherit;
+border : 1px solid blue;
+padding : 10px;
+cursor : pointer;
+&:hover {
+  background-color : ${props => props.alt ? 'salmon' : 'lightgreen'};
+  color : black;
+}
+`;
 
 
 class App extends Component {
@@ -65,7 +78,7 @@ class App extends Component {
 
  
   render() {
-    const style = {
+   /*  const style = {
       backgroundColor : 'green',
       color : 'white',
       font : 'inherit',
@@ -76,7 +89,7 @@ class App extends Component {
         backgroundColor : 'lightgreen',
         color : 'black'
       }
-    }
+    } */
 
     let persons = null;
     if(this.state.showPersons){
@@ -93,11 +106,11 @@ class App extends Component {
           })}
         </div> 
       );
-      style.backgroundColor = 'red';
+     /*  style.backgroundColor = 'red';
       style[':hover'] ={
         backgroundColor :'salmon',
         color : 'black'
-      }
+      } */
     }
     /*<Person name={this.state.persons[0].name} age={this.state.persons[0].age} click = {this.switchNameHandler}>Hobby : Quizing</Person>
     <Person name={this.state.persons[1].name}age={this.state.persons[1].age} changed = {this.nameChangedHandler}/>
@@ -116,24 +129,22 @@ class App extends Component {
 
 
     return (
-      <StyleRoot>
       <div className="App">
         <h1>Hi, I'm React</h1>
         <p className={classes.join(' ')}>This is really Working!</p>
-        <button 
-        style = {style}
+        <StyledButton 
+        alt = {this.state.showPersons}
         onClick = {this.togglePersonsHandler
-        }>Toggle Persons</button>
+        }>Toggle Persons</StyledButton>
       {persons}
       </div>
-      </StyleRoot>
     );
 
   //return React.createElement('div', { className:'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
-export default Radium(App);
+export default App;
 
 /*import React, { useState } from 'react';
 import './App.css';
