@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Radium, { StyleRoot } from 'radium';
 import Person from './Person/Person';
 
 
@@ -40,7 +41,7 @@ class App extends Component {
     persons[personIndex] = person;
 
     this.setState( { persons : persons } );
-    
+
     /*this.setState({
       persons : [
         {name:'Sandy', age:31},
@@ -65,11 +66,16 @@ class App extends Component {
  
   render() {
     const style = {
-      backgroundColor : 'white',
+      backgroundColor : 'green',
+      color : 'white',
       font : 'inherit',
       border : '1px solid blue',
       padding : '10px',
-      cursor : 'pointer'
+      cursor : 'pointer',
+      ':hover' : {
+        backgroundColor : 'lightgreen',
+        color : 'black'
+      }
     }
 
     let persons = null;
@@ -85,30 +91,49 @@ class App extends Component {
             changed = {(event) => this.nameChangedHandler(event, person.id)}
             />
           })}
-         
         </div> 
       );
+      style.backgroundColor = 'red';
+      style[':hover'] ={
+        backgroundColor :'salmon',
+        color : 'black'
+      }
     }
     /*<Person name={this.state.persons[0].name} age={this.state.persons[0].age} click = {this.switchNameHandler}>Hobby : Quizing</Person>
     <Person name={this.state.persons[1].name}age={this.state.persons[1].age} changed = {this.nameChangedHandler}/>
     <Person name={this.state.persons[2].name} age={this.state.persons[2].age}/>
     */
+
+    //let classes = ['red','bold'].join(' ');
+
+    const classes = [];
+    if(this.state.persons.length <= 2){
+      classes.push('red'); //classes = ['red'];
+    }
+    if(this.state.persons.length <=1){
+      classes.push('bold'); //classes = ['red', 'bold'];
+    }
+
+
     return (
+      <StyleRoot>
       <div className="App">
         <h1>Hi, I'm React</h1>
-        <p>This is really Working!</p>
-        <button style = {style}
+        <p className={classes.join(' ')}>This is really Working!</p>
+        <button 
+        style = {style}
         onClick = {this.togglePersonsHandler
         }>Toggle Persons</button>
       {persons}
       </div>
+      </StyleRoot>
     );
 
   //return React.createElement('div', { className:'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
-export default App;
+export default Radium(App);
 
 /*import React, { useState } from 'react';
 import './App.css';
